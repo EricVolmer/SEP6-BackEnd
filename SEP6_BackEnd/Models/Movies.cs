@@ -15,5 +15,12 @@ namespace SEP6_BackEnd.Models
     public partial class Movies
     {
         public int Id { get; set; }
-    }
+        public string original_language { get; set; }
+        public string original_title { get; set; }
+        public string release_date { get; set; }
+        public string vote_avarage { get; set; }
+        public string vote_count { get; set; }
+        public string overview { get; set; }
+        public string popularity { get; set; }
+    }s
 }

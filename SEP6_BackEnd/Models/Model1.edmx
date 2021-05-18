@@ -20,6 +20,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="original_language" Type="String" Nullable="false" />
+          <Property Name="original_title" Type="String" Nullable="false" />
+          <Property Name="release_date" Type="String" Nullable="false" />
+          <Property Name="vote_avarage" Type="String" Nullable="false" />
+          <Property Name="vote_count" Type="String" Nullable="false" />
+          <Property Name="overview" Type="String" Nullable="false" />
+          <Property Name="popularity" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="userLogin">
           <Key>

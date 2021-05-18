@@ -5,8 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6829bb8cb6c84b3089aa82356d8cbee2" Name="Diagram1" >
-        <EntityTypeShape EntityType="SEP6_MoviesModel.Movies" Width="1.5" PointX="3" PointY="1.125" />
-        <EntityTypeShape EntityType="SEP6_MoviesModel.userLogin" Width="1.5" PointX="7.625" PointY="3.25" />
+        <EntityTypeShape EntityType="SEP6_MoviesModel.Movies" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SEP6_MoviesModel.userLogin" Width="1.5" PointX="6" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
