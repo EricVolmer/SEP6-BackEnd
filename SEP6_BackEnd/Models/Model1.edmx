@@ -4,30 +4,117 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SEP6_MoviesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="SEP6_MoviesModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="SEP6_MoviesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="SEP6_MoviesModelStoreContainer">
+    <EntitySet Name="Movies" EntityType="SEP6_MoviesModel.Store.Movies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="userLogins" EntityType="SEP6_MoviesModel.Store.userLogins" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="comments" EntityType="SEP6_MoviesModel.Store.comments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="userLoginMovies" EntityType="SEP6_MoviesModel.Store.userLoginMovies" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_userLoginMovies_userLogin" Association="SEP6_MoviesModel.Store.FK_userLoginMovies_userLogin">
+      <End Role="userLogin" EntitySet="userLogins" />
+      <End Role="userLoginMovies" EntitySet="userLoginMovies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_userLoginMovies_Movies" Association="SEP6_MoviesModel.Store.FK_userLoginMovies_Movies">
+      <End Role="Movies" EntitySet="Movies" />
+      <End Role="userLoginMovies" EntitySet="userLoginMovies" />
+    </AssociationSet>
+    <AssociationSet Name="commentsMovies" Association="SEP6_MoviesModel.Store.commentsMovies">
+      <End Role="comments" EntitySet="comments" />
+      <End Role="Movies" EntitySet="Movies" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Movies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="userLogins">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="listOfFavorites" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="comments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Movy_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="userLoginMovies">
+    <Key>
+      <PropertyRef Name="userLogins_Id" />
+      <PropertyRef Name="Movies_Id" />
+    </Key>
+    <Property Name="userLogins_Id" Type="int" Nullable="false" />
+    <Property Name="Movies_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="commentsMovies">
+    <End Role="comments" Type="SEP6_MoviesModel.Store.comments" Multiplicity="*" />
+    <End Role="Movies" Type="SEP6_MoviesModel.Store.Movies" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Movies">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="comments">
+        <PropertyRef Name="Movy_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_userLoginMovies_userLogin">
+    <End Role="userLogin" Type="SEP6_MoviesModel.Store.userLogins" Multiplicity="1" />
+    <End Role="userLoginMovies" Type="SEP6_MoviesModel.Store.userLoginMovies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userLogin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="userLoginMovies">
+        <PropertyRef Name="userLogins_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_userLoginMovies_Movies">
+    <End Role="userLoginMovies" Type="SEP6_MoviesModel.Store.userLoginMovies" Multiplicity="*" />
+    <End Role="Movies" Type="SEP6_MoviesModel.Store.Movies" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Movies">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="userLoginMovies">
+        <PropertyRef Name="Movies_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SEP6_MoviesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SEP6_MoviesEntities" annotation:LazyLoadingEnabled="true" >
           <EntitySet Name="Movies" EntityType="SEP6_MoviesModel.Movies" />
           <EntitySet Name="userLogins" EntityType="SEP6_MoviesModel.userLogin" />
+          <EntitySet Name="comments" EntityType="SEP6_MoviesModel.comments" />
+          <AssociationSet Name="userLoginMovies" Association="SEP6_MoviesModel.userLoginMovies">
+            <End Role="userLogin" EntitySet="userLogins" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="commentsMovies" Association="SEP6_MoviesModel.commentsMovies">
+            <End Role="comments" EntitySet="comments" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Movies">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="original_language" Type="String" Nullable="false" />
-          <Property Name="original_title" Type="String" Nullable="false" />
-          <Property Name="release_date" Type="String" Nullable="false" />
-          <Property Name="vote_avarage" Type="String" Nullable="false" />
-          <Property Name="vote_count" Type="String" Nullable="false" />
-          <Property Name="overview" Type="String" Nullable="false" />
-          <Property Name="popularity" Type="String" Nullable="false" />
-        </EntityType>
+          <NavigationProperty Name="userLogins" Relationship="SEP6_MoviesModel.userLoginMovies" FromRole="Movies" ToRole="userLogin" />
+          <NavigationProperty Name="comments" Relationship="SEP6_MoviesModel.commentsMovies" FromRole="Movies" ToRole="comments" />
+          </EntityType>
         <EntityType Name="userLogin">
           <Key>
             <PropertyRef Name="Id" />
@@ -35,15 +122,74 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userName" Type="String" Nullable="false" />
           <Property Name="password" Type="String" Nullable="false" />
+          <Property Name="listOfFavorites" Type="String" Nullable="false" />
+          <NavigationProperty Name="Movies" Relationship="SEP6_MoviesModel.userLoginMovies" FromRole="userLogin" ToRole="Movies" />
         </EntityType>
+        <EntityType Name="comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="text" Type="String" Nullable="false" />
+          <NavigationProperty Name="Movy" Relationship="SEP6_MoviesModel.commentsMovies" FromRole="comments" ToRole="Movies" />
+        </EntityType>
+        <Association Name="userLoginMovies">
+          <End Type="SEP6_MoviesModel.userLogin" Role="userLogin" Multiplicity="*" />
+          <End Type="SEP6_MoviesModel.Movies" Role="Movies" Multiplicity="*" />
+        </Association>
+        <Association Name="commentsMovies">
+          <End Type="SEP6_MoviesModel.comments" Role="comments" Multiplicity="*" />
+          <End Type="SEP6_MoviesModel.Movies" Role="Movies" Multiplicity="1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SEP6_MoviesModelStoreContainer" CdmEntityContainer="SEP6_MoviesEntities" />
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SEP6_MoviesModelStoreContainer" CdmEntityContainer="SEP6_MoviesEntities">
+    <EntitySetMapping Name="Movies">
+      <EntityTypeMapping TypeName="IsTypeOf(SEP6_MoviesModel.Movies)">
+        <MappingFragment StoreEntitySet="Movies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userLogins">
+      <EntityTypeMapping TypeName="IsTypeOf(SEP6_MoviesModel.userLogin)">
+        <MappingFragment StoreEntitySet="userLogins">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="listOfFavorites" ColumnName="listOfFavorites" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="comments">
+      <EntityTypeMapping TypeName="IsTypeOf(SEP6_MoviesModel.comments)">
+        <MappingFragment StoreEntitySet="comments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="text" ColumnName="text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="userLoginMovies" TypeName="SEP6_MoviesModel.userLoginMovies" StoreEntitySet="userLoginMovies">
+      <EndProperty Name="userLogin">
+        <ScalarProperty Name="Id" ColumnName="userLogins_Id" />
+      </EndProperty>
+      <EndProperty Name="Movies">
+        <ScalarProperty Name="Id" ColumnName="Movies_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="commentsMovies" TypeName="SEP6_MoviesModel.commentsMovies" StoreEntitySet="comments">
+      <EndProperty Name="Movies">
+        <ScalarProperty Name="Id" ColumnName="Movy_Id" />
+      </EndProperty>
+      <EndProperty Name="comments">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -57,7 +203,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

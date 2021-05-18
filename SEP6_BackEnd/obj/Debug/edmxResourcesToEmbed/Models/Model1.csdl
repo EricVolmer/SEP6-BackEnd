@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SEP6_MoviesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SEP6_MoviesEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Movies" EntityType="SEP6_MoviesModel.Movies" />
+    <EntitySet Name="userLogins" EntityType="SEP6_MoviesModel.userLogin" />
+  </EntityContainer>
+  <EntityType Name="Movies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="original_language" Type="String" Nullable="false" />
+    <Property Name="original_title" Type="String" Nullable="false" />
+    <Property Name="release_date" Type="String" Nullable="false" />
+    <Property Name="vote_avarage" Type="String" Nullable="false" />
+    <Property Name="vote_count" Type="String" Nullable="false" />
+    <Property Name="overview" Type="String" Nullable="false" />
+    <Property Name="popularity" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="userLogin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userName" Type="String" Nullable="false" />
+    <Property Name="password" Type="String" Nullable="false" />
+  </EntityType>
+</Schema>

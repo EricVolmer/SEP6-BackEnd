@@ -14,13 +14,18 @@ namespace SEP6_BackEnd.Models
     
     public partial class Movies
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Movies()
+        {
+            this.userLogins = new HashSet<userLogin>();
+            this.comments = new HashSet<comments>();
+        }
+    
         public int Id { get; set; }
-        public string original_language { get; set; }
-        public string original_title { get; set; }
-        public string release_date { get; set; }
-        public string vote_avarage { get; set; }
-        public string vote_count { get; set; }
-        public string overview { get; set; }
-        public string popularity { get; set; }
-    }s
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<userLogin> userLogins { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<comments> comments { get; set; }
+    }
 }

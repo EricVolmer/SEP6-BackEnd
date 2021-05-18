@@ -27,5 +27,6 @@ namespace SEP6_BackEnd.Models
     
         public virtual DbSet<Movies> Movies { get; set; }
         public virtual DbSet<userLogin> userLogins { get; set; }
+        public virtual DbSet<comments> comments { get; set; }
     }
 }
